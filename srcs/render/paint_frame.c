@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:49:38 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:59:46 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:00:14 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static	t_vec	get_pixel_color(t_box *box, int i, int j)
 	return (sum);
 }
 
-// why?
+// why? 이 함수에 대한 이해 100프로 못함 ㅎ
 static	void	paint_pixel(t_img *img, int x, int y, t_vec color)
 {
 	char	*dst;
@@ -80,16 +80,11 @@ void	paint_frame(t_box *box)
 	box->frame.addr = mlx_get_data_addr(box->frame.img, \
 		&box->frame.bits_per_pixel, &box->frame.line_length, \
 		&box->frame.endian);
-	i = 0;
-	j = 0;
-	while (i < SCN_WIDTH)
+	i = -1;
+	while (++i < SCN_WIDTH)
 	{
-		j = 0;
-		while (j < SCN_HEIGHT)
-		{
+		j = -1;
+		while (++j < SCN_HEIGHT)
 			paint_pixel(&(box->frame), i, j, get_pixel_color(box, i, j));
-			j++;
-		}
-		i++;
 	}
 }

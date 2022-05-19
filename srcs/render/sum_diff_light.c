@@ -6,13 +6,13 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:10:43 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:30:06 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/18 23:23:46 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static	t_vec	get_diff_light(t_light *light, t_poi poi)
+static	t_vec	get_diff_light_sp(t_light *light, t_poi poi)
 {
 	t_vec	light_vec;
 	t_vec	norm_vec;
@@ -28,6 +28,17 @@ static	t_vec	get_diff_light(t_light *light, t_poi poi)
 	return (scale_vec(new_vec(1, 1, 1), light->b_ratio * diff_factor));
 }
 
+static	t_vec	get_diff_light_pl(t_light *light, t_poi poi)
+{
+	t_vec	light_vec;
+	double	diff_factor;
+
+	light_vec = normalize_vec(subtract_vecs(light->pos, poi.poi));
+	// 어느방향의 방향벡터인지?
+	diff_factor = fmax(dot_vecs(light_vec, ((t_pl *)(poi.obj->data))->point), 0);
+	return (scale_vec(new_vec(1, 1, 1), light->b_ratio * diff_factor));
+}
+
 // 한 교점을 기준으로 받는 diffuse light -> 모든 빛으로 부터 받는 diffuse light
 t_vec	sum_diff_light(t_box *box, t_poi poi)
 {
@@ -39,7 +50,9 @@ t_vec	sum_diff_light(t_box *box, t_poi poi)
 	while (light)
 	{
 		if (poi.obj->type == SPHERE)
-			diff_sum = add_vecs(diff_sum, get_diff_light(light, poi));
+			diff_sum = add_vecs(diff_sum, get_diff_light_sp(light, poi));
+		else if (poi.obj->type == PLANE)
+			diff_sum = add_vecs(diff_sum, get_diff_light_pl(light, poi));
 		light = light->next;
 	}
 	return (diff_sum);

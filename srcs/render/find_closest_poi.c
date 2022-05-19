@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:08:14 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:30:39 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/18 23:05:52 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,17 @@ static	double	get_poi_sp(t_sp *data, t_vec ray)
 	return (t);
 }
 
+static	double	get_poi_pl(t_pl *data, t_vec ray)
+{
+	double	factor;
+
+	factor = dot_vecs(data->n_vector, ray);
+	if (!factor)
+		exit_with_err("Dividing value by 0 is not allowed ", NULL);
+	return (dot_vecs(data->n_vector, data->point) / factor);
+}
+
 /* 
-    double   get_poi_plane(t_pl *data, t_vec ray);
     double   get_poi_cylinder(t_cy *data, t_vec ray);
 */
 
@@ -43,6 +52,8 @@ t_poi	find_closest_poi(t_box *box, t_vec ray)
 	{
 		if (obj->type == SPHERE)
 			t = get_poi_sp((t_sp *)(obj->data), ray);
+		else if (obj->type == PLANE)
+			t = get_poi_pl((t_pl *)(obj->data), ray);
 		if (t >= 1 && t < poi.t)
 		{
 			poi.t = t;

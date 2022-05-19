@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:10:00 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 15:59:12 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/18 17:27:09 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ typedef struct s_vec
 	double	y;
 	double	z;
 }	t_vec;
-
-typedef struct s_ray
-{
-	t_vec	origin;
-	t_vec	dir;
-}	t_ray;
 
 typedef struct s_camera
 {
