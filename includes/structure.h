@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:10:00 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 17:27:09 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/20 11:45:54 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_poi
 	double	t;
 	t_vec	poi;
 	t_obj	*obj;
+	t_vec	ray;
 }	t_poi;
 
 typedef struct s_box

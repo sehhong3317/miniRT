@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:08:14 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 23:05:52 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/20 12:33:22 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_poi	find_closest_poi(t_box *box, t_vec ray)
 
 	poi.t = INFINITY;
 	poi.obj = NULL;
+	poi.ray = ray;
 	obj = box->objs;
 	while (obj)
 	{
