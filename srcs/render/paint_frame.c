@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paint_frame.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:49:38 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/20 12:55:55 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/20 16:05:18 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ static	t_vec	get_pixel_color(t_box *box, int i, int j)
 	{
 		sum = add_vecs(sum, scale_vec(box->amb_light->color, \
 			box->amb_light->b_ratio));
-		sum = add_vecs(sum, sum_diff_light(box, poi));
+		sum = add_vecs(sum, sum_extra_light(box, poi));
+		// sum = add_vecs(sum, sum_diff_light(box, poi));
 		// sum_spec_light: 보너스부분
-		sum = add_vecs(sum, sum_spec_light(box, poi));
+		// sum = add_vecs(sum, sum_spec_light(box, poi));
 		pixel_color = multiply_vecs(sum, get_obj_color(poi));
 		// check_range(&pixel_color); -> 필요한가?
 		return (pixel_color);
@@ -61,7 +62,7 @@ static	t_vec	get_pixel_color(t_box *box, int i, int j)
 	return (sum);
 }
 
-// why? 이 함수에 대한 이해 100프로 못함 ㅎ
+// why? 이 함수에 대한 이해 100프로 이해못함 ㅎ
 static	void	paint_pixel(t_img *img, int x, int y, t_vec color)
 {
 	char	*dst;
