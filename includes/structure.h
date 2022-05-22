@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:10:00 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/20 11:45:54 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/22 14:20:20 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ typedef enum e_otype
 	CYLINDER,
 	ELSE
 }	t_otype;
+
+typedef enum e_ptype
+{
+	TOP = 0,
+	BASE,
+	SIDE,
+	NONE
+}	t_ptype;
 
 typedef struct s_img
 {
@@ -74,7 +82,8 @@ typedef struct s_pl
 
 typedef struct s_cy
 {
-	t_vec	point;
+	t_vec	point_top;
+	t_vec	point_base;
 	t_vec	n_vector;
 	double	radius;
 	double	height;
@@ -95,6 +104,8 @@ typedef struct s_poi
 	t_vec	poi;
 	t_obj	*obj;
 	t_vec	ray;
+	t_vec	view_dir;
+	t_ptype	cy_poi_on;
 }	t_poi;
 
 typedef struct s_box

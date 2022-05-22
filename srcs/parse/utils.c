@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:11:40 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/14 23:39:56 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/21 15:16:55 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,16 @@ t_vec	parse_vector(char *str, char *ele, int vec_type)
 	xyz = ft_split(str, ',');
 	validate_arr(xyz, 3, ele);
 	new_vec.x = ft_atod(xyz[0], ele);
-	if (vec_type == COLOR && !is_between(0, 255, new_vec.x))
-		exit_with_err("Color value is not in range: ", ele);
 	new_vec.y = ft_atod(xyz[1], ele);
-	if (vec_type == COLOR && !is_between(0, 255, new_vec.y))
-		exit_with_err("Color value is not in range: ", ele);
 	new_vec.z = ft_atod(xyz[2], ele);
-	if (vec_type == COLOR && !is_between(0, 255, new_vec.z))
-		exit_with_err("Color value is not in range: ", ele);
+	if (vec_type == COLOR)
+	{
+		if (!is_between(0, 255, new_vec.x) || !is_between(0, 255, new_vec.y) \
+			|| !is_between(0, 255, new_vec.z))
+			exit_with_err("Color value is not in range: ", ele);
+	}
+	if (vec_type == VECTOR)
+		new_vec = normalize_vec(new_vec);
 	free_str_arr(&xyz);
 	return (new_vec);
 }

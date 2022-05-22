@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:52:07 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:35:17 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/22 14:39:55 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ static	void	transform_objs(t_box *box, double *tr_matrix)
 		}
 		else if (curr->type == CYLINDER)
 		{
-			((t_cy *)(curr->data))->point = transform_point(tr_matrix, \
-				((t_cy *)(curr->data))->point);
+			((t_cy *)(curr->data))->point_top = transform_point(tr_matrix, \
+				((t_cy *)(curr->data))->point_top);
+			((t_cy *)(curr->data))->point_base = transform_point(tr_matrix, \
+				((t_cy *)(curr->data))->point_base);
 			((t_cy *)(curr->data))->n_vector = transform_vec(tr_matrix, \
 				((t_cy *)(curr->data))->n_vector);
 		}

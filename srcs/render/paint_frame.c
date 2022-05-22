@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paint_frame.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:49:38 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/20 16:05:18 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/22 18:56:10 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,18 @@ static	t_vec	get_obj_color(t_poi poi)
 	return (color);
 }
 
-// static	void	check_range(t_vec *color)
-// {
-// 	if (color->x > 255)
-// 		color->x = 255;
-// 	if (color->y > 255)
-// 		color->y = 255;
-// 	if (color->z > 255)
-// 		color->z = 255;
-// }
+static	double	limit_range(double x)
+{
+	double	new_x;
+
+	if (x > 255)
+		new_x = 255;
+	else if (x < 0)
+		new_x = 0;
+	else
+		new_x = x;
+	return (new_x);
+}
 
 static	t_vec	get_pixel_color(t_box *box, int i, int j)
 {
@@ -49,14 +52,18 @@ static	t_vec	get_pixel_color(t_box *box, int i, int j)
 	poi = find_closest_poi(box, ray);
 	if (poi.t != INFINITY)
 	{
+		// printf("haha");
+		// sum = 최종 빛의 양
 		sum = add_vecs(sum, scale_vec(box->amb_light->color, \
-			box->amb_light->b_ratio));
+			box->amb_light->b_ratio / 255));
 		sum = add_vecs(sum, sum_extra_light(box, poi));
-		// sum = add_vecs(sum, sum_diff_light(box, poi));
-		// sum_spec_light: 보너스부분
-		// sum = add_vecs(sum, sum_spec_light(box, poi));
+		// 픽셀 색 = 최종 빛의 양 * 물체의 색
 		pixel_color = multiply_vecs(sum, get_obj_color(poi));
-		// check_range(&pixel_color); -> 필요한가?
+		// 각 rgb값이 0 - 255사이인가?
+		pixel_color.x = limit_range(pixel_color.x);
+		pixel_color.y = limit_range(pixel_color.y);
+		pixel_color.z = limit_range(pixel_color.z);
+		// printf("pixel color = (%f, %f, %f)\n", pixel_color.x, pixel_color.y, pixel_color.z);
 		return (pixel_color);
 	}
 	return (sum);

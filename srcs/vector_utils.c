@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:05:22 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:36:31 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/22 14:06:57 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,17 @@ t_vec	normalize_vec(t_vec vec)
 
 	vec_len = get_vec_len(vec);
 	if (!vec_len)
-		exit_with_err("Dividing value by 0 is not allowed ", NULL);
+		exit_with_err("Dividing value by 0 is not allowed ", "from function \'normalize_vec\'");
 	new_vec.x = vec.x / vec_len;
 	new_vec.y = vec.y / vec_len;
 	new_vec.z = vec.z / vec_len;
 	return (new_vec);
+}
+
+double	get_distance(t_vec vec1, t_vec vec2)
+{
+	double	sq;
+
+	sq = pow(vec1.x - vec2.x, 2) + pow(vec1.y - vec2.y, 2) + pow(vec1.z - vec2.z, 2);
+	return (sqrt(sq));
 }

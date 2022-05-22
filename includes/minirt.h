@@ -6,15 +6,15 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:03:31 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/20 12:40:28 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/22 14:07:20 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define SCN_WIDTH	800
-# define SCN_HEIGHT	400
+# define SCN_WIDTH	1200
+# define SCN_HEIGHT	800
 # define POINT	0
 # define COLOR	1
 # define VECTOR	2
@@ -51,8 +51,9 @@ t_vec	transform_vec(double *m, t_vec vec);
 t_vec	transform_point(double *m, t_vec point);
 
 /* render */
-t_vec	sum_diff_light(t_box *box, t_poi poi);
-t_vec	sum_spec_light(t_box *box, t_poi poi);
+// t_vec	sum_diff_light(t_box *box, t_poi poi);
+// t_vec	sum_spec_light(t_box *box, t_poi poi);
+t_vec	sum_extra_light(t_box *box, t_poi poi);
 t_poi	find_closest_poi(t_box *box, t_vec ray);
 void	paint_frame(t_box *box);
 double	get_root(double a, double b, double c);
@@ -73,5 +74,6 @@ t_vec	subtract_vecs(t_vec vec1, t_vec vec2);
 int		cmp_vec(t_vec vec1, t_vec vec2);
 t_vec	multiply_vecs(t_vec vec1, t_vec vec2);
 t_vec	normalize_vec(t_vec vec);
+double	get_distance(t_vec vec1, t_vec vec2);
 
 #endif
