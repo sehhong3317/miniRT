@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:11:40 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/21 15:16:55 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/31 01:18:43 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_vec	parse_vector(char *str, char *ele, int vec_type)
 			|| !is_between(0, 255, new_vec.z))
 			exit_with_err("Color value is not in range: ", ele);
 	}
-	if (vec_type == VECTOR)
+	else if (vec_type == VECTOR)
 		new_vec = normalize_vec(new_vec);
 	free_str_arr(&xyz);
 	return (new_vec);

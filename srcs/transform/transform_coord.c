@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform_coord.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:52:07 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/30 17:18:59 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 23:06:48 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static	void	transform_objs(t_box *box, double *tr_matrix)
 		{
 			((t_pl *)(curr->data))->point = transform_point(tr_matrix, \
 				((t_pl *)(curr->data))->point);
-			((t_pl *)(curr->data))->n_vector = transform_vec(tr_matrix, \
-				((t_pl *)(curr->data))->n_vector);
+			((t_pl *)(curr->data))->n_vector = normalize_vec(transform_vec(tr_matrix, \
+				((t_pl *)(curr->data))->n_vector));
 		}
 		else if (curr->type == CYLINDER)
 		{
@@ -35,15 +35,15 @@ static	void	transform_objs(t_box *box, double *tr_matrix)
 				((t_cy *)(curr->data))->point_top);
 			((t_cy *)(curr->data))->point_base = transform_point(tr_matrix, \
 				((t_cy *)(curr->data))->point_base);
-			((t_cy *)(curr->data))->n_vector = transform_vec(tr_matrix, \
-				((t_cy *)(curr->data))->n_vector);
+			((t_cy *)(curr->data))->n_vector = normalize_vec(transform_vec(tr_matrix, \
+				((t_cy *)(curr->data))->n_vector));
 		}
 		else if (curr->type == CONE)
 		{
 			((t_cn *)(curr->data))->point = transform_point(tr_matrix, \
 				((t_cn *)(curr->data))->point);
-			((t_cn *)(curr->data))->n_vector = transform_vec(tr_matrix, \
-				((t_cn *)(curr->data))->n_vector);
+			((t_cn *)(curr->data))->n_vector = normalize_vec(transform_vec(tr_matrix, \
+				((t_cn *)(curr->data))->n_vector));
 		}
 		curr = curr->next;
 	}

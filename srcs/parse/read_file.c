@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 23:33:38 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/30 15:43:34 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 21:10:55 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static	void	analyze_line(t_box *box, char *line)
 		parse_plane(box, arr);
 	else if (!ft_strncmp(arr[0], "cy", 3))
 		parse_cylinder(box, arr);
-	else if (!ft_srncmp(arr[0], "cn", 3))
+	else if (!ft_strncmp(arr[0], "cn", 3))
 		parse_cone(box, arr);
 	else
 		exit_with_err("Wrong type identifier was given in the file", NULL);
