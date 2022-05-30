@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_closest_poi.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:08:14 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/22 23:20:24 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/31 02:46:55 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	double	get_poi_pl(t_pl *data, t_vec ray)
 
 	factor = dot_vecs(data->n_vector, ray);
 	if (!factor)
-		return (1);
+		return (0);
 	return (dot_vecs(data->n_vector, data->point) / factor);
 }
 
@@ -137,7 +137,7 @@ t_poi	find_closest_poi(t_box *box, t_vec ray)
 			t = get_poi_pl((t_pl *)(obj->data), ray);
 		else if (obj->type == CYLINDER)
 			t = get_poi_cy((t_cy *)(obj->data), ray, &(poi.cy_poi_on));
-		if (t > 1 && t < poi.t)
+		if (t >= 0 && t < poi.t)
 		{
 			poi.t = t;
 			poi.poi = scale_vec(ray, t);

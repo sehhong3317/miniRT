@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sum_extra_light.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:05:03 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/22 23:42:05 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/31 05:35:20 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static	t_vec	get_extra_light(t_light *light, t_poi poi)
 	factor += get_diff_factor(light_vec, norm_vec);
 	factor += get_spec_factor(poi, light_vec, norm_vec);
 	//원래 흰색 빛: (255, 255, 255) -> (1, 1, 1)
-	return (scale_vec(new_vec(1, 1, 1), factor * light->b_ratio));
+	return (scale_vec(new_vec(1, 1, 1), factor * light->b_ratio * 0.5));
 }
 
 t_vec	sum_extra_light(t_box *box, t_poi poi)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paint_frame.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: sehhong <sehhong@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:49:38 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/22 18:56:10 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/31 02:20:02 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static	t_vec	get_obj_color(t_poi poi)
 		color = ((t_sp *)(poi.obj->data))->color;
 	else if (type == PLANE)
 		color = ((t_pl *)(poi.obj->data))->color;
-	else
+	else if (type == CYLINDER)
 		color = ((t_cy *)(poi.obj->data))->color;
+	else
+		color = ((t_cn *)(poi.obj->data))->color;
 	return (color);
 }
 
@@ -52,7 +54,6 @@ static	t_vec	get_pixel_color(t_box *box, int i, int j)
 	poi = find_closest_poi(box, ray);
 	if (poi.t != INFINITY)
 	{
-		// printf("haha");
 		// sum = 최종 빛의 양
 		sum = add_vecs(sum, scale_vec(box->amb_light->color, \
 			box->amb_light->b_ratio / 255));
