@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 23:33:38 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:37:27 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 15:43:34 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static	void	analyze_line(t_box *box, char *line)
 {
 	char	**arr;
 
-	// malloc 실패시 처리?
 	arr = ft_split(line, ' ');
 	if (!ft_strncmp(arr[0], "A", 2))
 		parse_ambient(box, arr);
@@ -30,13 +29,14 @@ static	void	analyze_line(t_box *box, char *line)
 		parse_plane(box, arr);
 	else if (!ft_strncmp(arr[0], "cy", 3))
 		parse_cylinder(box, arr);
+	else if (!ft_srncmp(arr[0], "cn", 3))
+		parse_cone(box, arr);
 	else
 		exit_with_err("Wrong type identifier was given in the file", NULL);
 	free_str_arr(&arr);
 	arr = NULL;
 }
 
-// 파싱결과 validate하기
 static	void	validate_file(t_box *box)
 {
 	if (!box->camera)
@@ -63,18 +63,18 @@ void	read_file(t_box *box, char *f_name)
 	if (fd == -1)
 		exit_with_err("Failed to call open(): ", strerror(errno));
 	ft_memset(box, 0, sizeof(t_box));
-	// gnl 사용법..?
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (*line)
 			analyze_line(box, line);
 		free(line);
-		line = NULL;
 	}
-	if (*line)
-		analyze_line(box, line);
-	free(line);
-	line = NULL;
+	if (line)
+	{
+		if (*line)
+			analyze_line(box, line);
+		free(line);
+	}
 	close(fd);
 	validate_file(box);
 }

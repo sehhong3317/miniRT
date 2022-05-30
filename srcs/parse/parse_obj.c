@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:03:49 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/22 12:12:08 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:10:58 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	parse_plane(t_box *box, char **arr)
 	if (!pl)
 		exit_with_err("Failed to call malloc()", strerror(errno));
 	pl->point = parse_vector(arr[1], ele, POINT);
-	// parse_vector?
 	pl->n_vector = parse_vector(arr[2], ele, VECTOR);
 	pl->color = parse_vector(arr[3], ele, COLOR);
 	add_obj(box, PLANE, pl);
@@ -62,4 +61,20 @@ void	parse_cylinder(t_box *box, char **arr)
 	cy->color = parse_vector(arr[5], ele, COLOR);
 	cy->point_top = add_vecs(cy->point_base, scale_vec(cy->n_vector, cy->height));
 	add_obj(box, CYLINDER, cy);
+}
+
+void	parse_cone(t_box *box, char **arr)
+{
+	t_cn	*cn;
+	char	*ele;
+
+	ele = "cone";
+	validate_arr(arr, 6, ele);
+	cn = (t_cn *)ft_calloc(1, sizeof(t_cn));
+	cn->point = parse_vector(arr[1], ele, POINT);
+	cn->n_vector = parse_vector(arr[2], ele, VECTOR);
+	cn->radius = ft_atod(arr[3], ele) * 0.5;
+	cn->height = ft_atod(arr[4], ele);
+	cn->color = parse_vector(arr[5], ele, COLOR);
+	add_obj(box, CONE, cn);
 }

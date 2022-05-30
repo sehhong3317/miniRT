@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 13:52:07 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/22 14:39:55 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:18:59 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ static	void	transform_objs(t_box *box, double *tr_matrix)
 			((t_cy *)(curr->data))->n_vector = transform_vec(tr_matrix, \
 				((t_cy *)(curr->data))->n_vector);
 		}
+		else if (curr->type == CONE)
+		{
+			((t_cn *)(curr->data))->point = transform_point(tr_matrix, \
+				((t_cn *)(curr->data))->point);
+			((t_cn *)(curr->data))->n_vector = transform_vec(tr_matrix, \
+				((t_cn *)(curr->data))->n_vector);
+		}
 		curr = curr->next;
 	}
 }
@@ -49,27 +56,33 @@ static	int	need_transform(t_camera *camera)
 		camera->n_vector.z == -1));
 }
 
+static void	transform_lights(t_box *box, double *matrix)
+{
+	t_light	*cur;
+
+	cur = box->lights;
+	while (cur)
+	{
+		cur->pos = transform_point(matrix, cur->pos);
+		cur = cur->next;
+	}
+}
+
 void	transform_coord(t_box *box)
 {
 	double	*tr_matrix;
 
+	box->top_left = new_vec(-0.5 * SCN_WIDTH, 0.5 * SCN_HEIGHT, \
+		-(box->camera->foc_len));
 	if (!need_transform(box->camera))
-	{	
-		// box->top_left의 좌표 구하기
-		box->top_left = new_vec(-0.5 * SCN_WIDTH, 0.5 * SCN_HEIGHT, \
-			-(box->camera->foc_len));
 		return ;
-	}
 	tr_matrix = (double *)ft_calloc(16, sizeof(double));
 	if (!tr_matrix)
 		exit_with_err("Failed to call malloc()", strerror(errno));
 	fill_tr_matrix(box->camera, tr_matrix);
-	// light -> camera -> objects에 만들어진 변환행렬을 모두 적용
-	box->lights->pos = transform_point(tr_matrix, box->lights->pos);
 	box->camera->pos = transform_point(tr_matrix, box->camera->pos);
 	box->camera->n_vector = transform_vec(tr_matrix, box->camera->n_vector);
+	transform_lights(box, tr_matrix);
 	transform_objs(box, tr_matrix);
-	// box->top_left의 좌표 구하기
-	box->top_left = new_vec(-0.5 * SCN_WIDTH, 0.5 * SCN_HEIGHT, \
-		-(box->camera->foc_len));
+	free(tr_matrix);
 }

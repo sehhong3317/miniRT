@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:10:00 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/22 14:20:20 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 15:45:04 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef enum e_otype
 	SPHERE = 0,
 	PLANE,
 	CYLINDER,
+	CONE,
 	ELSE
 }	t_otype;
 
@@ -90,6 +91,16 @@ typedef struct s_cy
 	t_vec	color;
 }	t_cy;
 
+typedef struct s_cn
+{
+	double	radius;
+	double	height;
+	t_vec	point;
+	t_vec	n_vector;
+	t_vec	color;
+}	t_cn;
+
+
 typedef struct s_obj
 {
 	t_otype			type;
@@ -97,7 +108,6 @@ typedef struct s_obj
 	struct s_obj	*next;
 }	t_obj;
 
-//poi = point of intersection(교점)
 typedef struct s_poi
 {
 	double	t;

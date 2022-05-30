@@ -6,7 +6,7 @@
 /*   By: sehhong <sehhong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 11:05:41 by sehhong           #+#    #+#             */
-/*   Updated: 2022/05/18 16:46:00 by sehhong          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:10:17 by sehhong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	parse_light(t_box *box, char **arr)
 	t_light	*light;
 
 	ele = "light";
-	if (box->lights)
-		exit_with_err(ele, " should be given once");
 	validate_arr(arr, 4, ele);
 	light = (t_light *)ft_calloc(1, sizeof(t_light));
 	if (!light)
@@ -46,7 +44,8 @@ void	parse_light(t_box *box, char **arr)
 	if (!is_between(0, 1, light->b_ratio))
 		exit_with_err("Invalid value of ", ele);
 	light->color = parse_vector(arr[3], ele, COLOR);
-	// 보너스부분: add_light() 추가
+	if (box->lights)
+		light->next = box->lights;
 	box->lights = light;
 }
 
@@ -64,8 +63,6 @@ void	parse_camera(t_box *box, char **arr)
 		exit_with_err("Failed to call malloc()", strerror(errno));
 	box->camera->pos = parse_vector(arr[1], ele, POINT);
 	box->camera->n_vector = parse_vector(arr[2], ele, VECTOR);
-	if (get_vec_len(box->camera->n_vector) != 1)
-		exit_with_err("Vector is not normalized: ", ele);
 	fov = ft_atod(arr[3], ele);
 	if (!is_between(0, 180, fov))
 		exit_with_err("Invalid value of FOV", NULL);
